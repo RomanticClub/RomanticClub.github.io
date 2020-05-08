@@ -1,8 +1,8 @@
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
   /***/
@@ -51,7 +51,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"game\" *ngIf=\"0\">\r\n  <div></div>\r\n  <app-question></app-question>\r\n</div>\r\n<div class=\"start-page\" *ngIf=\"1\">\r\n  <div class=\"start-page__title\">\r\n    <h1>Продолжение истории...</h1>\r\n  </div>\r\n  <div class=\"start-page__start-button\">\r\n    Начать\r\n  </div>\r\n  <div class=\"start-page__heart\">\r\n    <img src=\"../assets/img/heart.png\" alt=\"\">\r\n  </div>\r\n</div>\r\n";
+    __webpack_exports__["default"] = "<div class=\"game\" *ngIf=\"isGameStarted\">\r\n  <div></div>\r\n  <app-question></app-question>\r\n</div>\r\n<div class=\"start-page\" *ngIf=\"!isGameStarted\">\r\n  <div class=\"start-page__title\">\r\n    <h1>Продолжение истории...</h1>\r\n  </div>\r\n  <div class=\"start-page__start-button\" (click)=\"isGameStarted = true\">\r\n    Начать\r\n  </div>\r\n  <div class=\"start-page__heart\">\r\n    <img src=\"../assets/img/heart.png\" alt=\"\">\r\n  </div>\r\n</div>\r\n";
     /***/
   },
 
@@ -71,7 +71,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"quest-answer\">\n  <div class=\"quest-answer__text-block\">\n    <div class=\"text-block__text\">\n      {{questionsService.currentText}}\n    </div>\n  </div>\n  <div class=\"question\">\n    <div class=\"question__text\">\n      {{questionsService.currentText}}\n    </div>\n  </div>\n\n  <div class=\"answers\" *ngIf=\"!questionsService.answersHidden\" [@inOutAnimation]>\n    <div class=\"answer__article\" *ngFor=\"let item of questionsService.currentAnswers; index as i\" (click)=\"questionsService.nextStep(i + 1)\">\n      {{item}}\n    </div>\n  </div>\n\n</div>\n";
+    __webpack_exports__["default"] = "<div class=\"quest-answer\" [ngStyle]=\"{'background-image': 'url(' + currentBg + ')'}\">\n  <div class=\"quest-answer__text-block\" *ngIf=\"questionsService.currentStep.text && !questionsService.answersHidden\" [@inOutAnimation]>\n    <div class=\"text-block__text\">\n    </div>\n  </div>\n  <div class=\"question\" *ngIf=\"questionsService.currentStep.question && !questionsService.answersHidden\" [@inOutAnimation]>\n    <div class=\"question__text\">\n    </div>\n  </div>\n\n  <div class=\"answer__text__hidden-block\" *ngIf=\"!questionsService.currentStep.answer1\" (click)=\"nextStep(1)\"></div>\n\n  <div class=\"answers\" *ngIf=\"!questionsService.answersHidden\" [@inOutAnimation]>\n    <div class=\"answer__article\" (click)=\"nextStep(1)\" *ngIf=\"questionsService.currentStep.answer1\">\n      {{questionsService.currentStep.answer1}}\n    </div>\n    <div class=\"answer__article\" (click)=\"nextStep(2)\" *ngIf=\"questionsService.currentStep.answer2\">\n      {{questionsService.currentStep.answer2}}\n    </div>\n    <div class=\"answer__article\" (click)=\"nextStep(3)\" *ngIf=\"questionsService.currentStep.answer3\">\n      {{questionsService.currentStep.answer3}}\n    </div>\n    <div class=\"answer__article\" (click)=\"nextStep(4)\" *ngIf=\"questionsService.currentStep.answer4\">\n      {{questionsService.currentStep.answer4}}\n    </div>\n  </div>\n\n</div>\n";
     /***/
   },
 
@@ -720,11 +720,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /*! @angular/core */
     "./node_modules/@angular/core/fesm2015/core.js");
 
-    var AppComponent = function AppComponent() {
-      _classCallCheck(this, AppComponent);
+    var AppComponent = /*#__PURE__*/function () {
+      function AppComponent() {
+        _classCallCheck(this, AppComponent);
 
-      this.title = 'romatic2';
-    };
+        this.title = 'romatic2';
+        this.isGameStarted = false;
+        this.images = new Array();
+      }
+
+      _createClass(AppComponent, [{
+        key: "preload",
+        value: function preload(array) {
+          for (var i = 0; i < array.length; i++) {
+            this.images[i] = new Image();
+            this.images[i].src = array[i];
+          }
+        }
+      }, {
+        key: "ngOnInit",
+        value: function ngOnInit() {
+          this.preload(['../assets/img/question.png', '../assets/img/heart.png', '../assets/img/start-bg.png', '../assets/img/text.png', '../assets/img/home.png', '../assets/img/home-mom.png', '../assets/img/metro.png', '../assets/img/metro-bad.png', '../assets/img/metro-badoo-1.png', '../assets/img/metro-badoo-2.png', '../assets/img/metro-badoo-3.png', '../assets/img/metro-nasty.png', '../assets/img/office.png', '../assets/img/office-friend.png', '../assets/img/end-bad.png']);
+        }
+      }]);
+
+      return AppComponent;
+    }();
 
     AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
       selector: 'app-root',
@@ -823,7 +844,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".quest-answer {\r\n  position: relative;\r\n  height: 180px;\r\n  padding-top: 150px;\r\n}\r\n.quest-answer__text-block {\r\n  width: 256px;\r\n  height: 150px;\r\n  background-image: url('text.png');\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n  position: absolute;\r\n  top: -150px;\r\n  left: 10%;\r\n}\r\n.text-block__text {\r\n  width: 70%;\r\n  height: 40%;\r\n  display: flex;\r\n  align-items: center;\r\n  position: absolute;\r\n  top: 68px;\r\n  left: 13%;\r\n  color: #ffffff;\r\n  font-size: 16px;\r\n  font-family: Caveat;\r\n}\r\n.question {\r\n  width: 256px;\r\n  height: 150px;\r\n  background-image: url('question.png');\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n  position: absolute;\r\n  top: 0;\r\n  left: 10%;\r\n}\r\n.question__text {\r\n  position: absolute;\r\n  top: 45px;\r\n  width: 80%;\r\n  left: 10%;\r\n  color: #ffffff;\r\n  font-size: 18px;\r\n  font-family: Caveat;\r\n}\r\n.answers {\r\n  color: #ffffff;\r\n  font-size: 14px;\r\n  width: 80%;\r\n  margin: 0 auto;\r\n  font-family: Caveat;\r\n}\r\n.answer__article {\r\n  background-color: #d67575;\r\n  padding: 8px 5px;\r\n  border-radius: 10px;\r\n  margin-top: 15px;\r\n  text-align: center;\r\n}\r\n.answer__article:first-child {\r\n  margin-top: 30px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcXVlc3Rpb24vcXVlc3Rpb24uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isa0JBQWtCO0FBQ3BCO0FBQ0E7RUFDRSxZQUFZO0VBQ1osYUFBYTtFQUNiLGlDQUFrRDtFQUNsRCx3QkFBd0I7RUFDeEIsNEJBQTRCO0VBQzVCLGtCQUFrQjtFQUNsQixXQUFXO0VBQ1gsU0FBUztBQUNYO0FBQ0E7RUFDRSxVQUFVO0VBQ1YsV0FBVztFQUNYLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsa0JBQWtCO0VBQ2xCLFNBQVM7RUFDVCxTQUFTO0VBQ1QsY0FBYztFQUNkLGVBQWU7RUFDZixtQkFBbUI7QUFDckI7QUFDQTtFQUNFLFlBQVk7RUFDWixhQUFhO0VBQ2IscUNBQXNEO0VBQ3RELHdCQUF3QjtFQUN4Qiw0QkFBNEI7RUFDNUIsa0JBQWtCO0VBQ2xCLE1BQU07RUFDTixTQUFTO0FBQ1g7QUFDQTtFQUNFLGtCQUFrQjtFQUNsQixTQUFTO0VBQ1QsVUFBVTtFQUNWLFNBQVM7RUFDVCxjQUFjO0VBQ2QsZUFBZTtFQUNmLG1CQUFtQjtBQUNyQjtBQUNBO0VBQ0UsY0FBYztFQUNkLGVBQWU7RUFDZixVQUFVO0VBQ1YsY0FBYztFQUNkLG1CQUFtQjtBQUNyQjtBQUNBO0VBQ0UseUJBQXlCO0VBQ3pCLGdCQUFnQjtFQUNoQixtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtBQUNwQjtBQUNBO0VBQ0UsZ0JBQWdCO0FBQ2xCIiwiZmlsZSI6InNyYy9hcHAvcXVlc3Rpb24vcXVlc3Rpb24uY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5xdWVzdC1hbnN3ZXIge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICBoZWlnaHQ6IDE4MHB4O1xyXG4gIHBhZGRpbmctdG9wOiAxNTBweDtcclxufVxyXG4ucXVlc3QtYW5zd2VyX190ZXh0LWJsb2NrIHtcclxuICB3aWR0aDogMjU2cHg7XHJcbiAgaGVpZ2h0OiAxNTBweDtcclxuICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoJy4uLy4uL2Fzc2V0cy9pbWcvdGV4dC5wbmcnKTtcclxuICBiYWNrZ3JvdW5kLXNpemU6IGNvbnRhaW47XHJcbiAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiAtMTUwcHg7XHJcbiAgbGVmdDogMTAlO1xyXG59XHJcbi50ZXh0LWJsb2NrX190ZXh0IHtcclxuICB3aWR0aDogNzAlO1xyXG4gIGhlaWdodDogNDAlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiA2OHB4O1xyXG4gIGxlZnQ6IDEzJTtcclxuICBjb2xvcjogI2ZmZmZmZjtcclxuICBmb250LXNpemU6IDE2cHg7XHJcbiAgZm9udC1mYW1pbHk6IENhdmVhdDtcclxufVxyXG4ucXVlc3Rpb24ge1xyXG4gIHdpZHRoOiAyNTZweDtcclxuICBoZWlnaHQ6IDE1MHB4O1xyXG4gIGJhY2tncm91bmQtaW1hZ2U6IHVybCgnLi4vLi4vYXNzZXRzL2ltZy9xdWVzdGlvbi5wbmcnKTtcclxuICBiYWNrZ3JvdW5kLXNpemU6IGNvbnRhaW47XHJcbiAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiAwO1xyXG4gIGxlZnQ6IDEwJTtcclxufVxyXG4ucXVlc3Rpb25fX3RleHQge1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICB0b3A6IDQ1cHg7XHJcbiAgd2lkdGg6IDgwJTtcclxuICBsZWZ0OiAxMCU7XHJcbiAgY29sb3I6ICNmZmZmZmY7XHJcbiAgZm9udC1zaXplOiAxOHB4O1xyXG4gIGZvbnQtZmFtaWx5OiBDYXZlYXQ7XHJcbn1cclxuLmFuc3dlcnMge1xyXG4gIGNvbG9yOiAjZmZmZmZmO1xyXG4gIGZvbnQtc2l6ZTogMTRweDtcclxuICB3aWR0aDogODAlO1xyXG4gIG1hcmdpbjogMCBhdXRvO1xyXG4gIGZvbnQtZmFtaWx5OiBDYXZlYXQ7XHJcbn1cclxuLmFuc3dlcl9fYXJ0aWNsZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2Q2NzU3NTtcclxuICBwYWRkaW5nOiA4cHggNXB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgbWFyZ2luLXRvcDogMTVweDtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuLmFuc3dlcl9fYXJ0aWNsZTpmaXJzdC1jaGlsZCB7XHJcbiAgbWFyZ2luLXRvcDogMzBweDtcclxufVxyXG4iXX0= */";
+    __webpack_exports__["default"] = ".quest-answer {\r\n  position: relative;\r\n  height: 100vh;\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n}\r\n.quest-answer__text-block {\r\n  width: 80%;\r\n  height: 80%;\r\n  background-image: url('text.png');\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n  position: absolute;\r\n  top: 20px;\r\n  left: 10%;\r\n}\r\n.text-block__text {\r\n  width: 70%;\r\n  height: 15%;\r\n  display: flex;\r\n  align-items: center;\r\n  position: absolute;\r\n  top: 68px;\r\n  left: 13%;\r\n  color: #ffffff;\r\n  font-size: 16px;\r\n  font-family: Caveat;\r\n}\r\n.question {\r\n  width: 90%;\r\n  height: 80%;\r\n  background-image: url('question.png');\r\n  background-size: contain;\r\n  background-repeat: no-repeat;\r\n  position: absolute;\r\n  top: 35%;\r\n  left: 6%;\r\n}\r\n.question__text {\r\n  position: absolute;\r\n  top: 50px;\r\n  width: 80%;\r\n  left: 10%;\r\n  color: #ffffff;\r\n  font-size: 18px;\r\n  font-family: Caveat;\r\n}\r\n.answers {\r\n  color: #ffffff;\r\n  font-size: 14px;\r\n  width: 80%;\r\n  left: 10%;\r\n  font-family: Caveat;\r\n  position: absolute;\r\n  bottom: 60px;\r\n}\r\n.answer__article {\r\n  background-color: #d67575;\r\n  padding: 8px 5px;\r\n  border-radius: 10px;\r\n  margin-top: 15px;\r\n  text-align: center;\r\n  /*box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.7);*/\r\n}\r\n.answer__article:first-child {\r\n  margin-top: 30px;\r\n}\r\n.answer__text__hidden-block {\r\n  height: 100vh;\r\n  width: 100vw;\r\n  position: absolute;\r\n}\r\n.typed-cursor {\r\n  opacity: 0;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcXVlc3Rpb24vcXVlc3Rpb24uY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isd0JBQXdCO0VBQ3hCLDRCQUE0QjtBQUM5QjtBQUNBO0VBQ0UsVUFBVTtFQUNWLFdBQVc7RUFDWCxpQ0FBa0Q7RUFDbEQsd0JBQXdCO0VBQ3hCLDRCQUE0QjtFQUM1QixrQkFBa0I7RUFDbEIsU0FBUztFQUNULFNBQVM7QUFDWDtBQUNBO0VBQ0UsVUFBVTtFQUNWLFdBQVc7RUFDWCxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLGtCQUFrQjtFQUNsQixTQUFTO0VBQ1QsU0FBUztFQUNULGNBQWM7RUFDZCxlQUFlO0VBQ2YsbUJBQW1CO0FBQ3JCO0FBQ0E7RUFDRSxVQUFVO0VBQ1YsV0FBVztFQUNYLHFDQUFzRDtFQUN0RCx3QkFBd0I7RUFDeEIsNEJBQTRCO0VBQzVCLGtCQUFrQjtFQUNsQixRQUFRO0VBQ1IsUUFBUTtBQUNWO0FBQ0E7RUFDRSxrQkFBa0I7RUFDbEIsU0FBUztFQUNULFVBQVU7RUFDVixTQUFTO0VBQ1QsY0FBYztFQUNkLGVBQWU7RUFDZixtQkFBbUI7QUFDckI7QUFDQTtFQUNFLGNBQWM7RUFDZCxlQUFlO0VBQ2YsVUFBVTtFQUNWLFNBQVM7RUFDVCxtQkFBbUI7RUFDbkIsa0JBQWtCO0VBQ2xCLFlBQVk7QUFDZDtBQUNBO0VBQ0UseUJBQXlCO0VBQ3pCLGdCQUFnQjtFQUNoQixtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLGtCQUFrQjtFQUNsQixnREFBZ0Q7QUFDbEQ7QUFDQTtFQUNFLGdCQUFnQjtBQUNsQjtBQUNBO0VBQ0UsYUFBYTtFQUNiLFlBQVk7RUFDWixrQkFBa0I7QUFDcEI7QUFDQTtFQUNFLFVBQVU7QUFDWiIsImZpbGUiOiJzcmMvYXBwL3F1ZXN0aW9uL3F1ZXN0aW9uLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucXVlc3QtYW5zd2VyIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgaGVpZ2h0OiAxMDB2aDtcclxuICBiYWNrZ3JvdW5kLXNpemU6IGNvbnRhaW47XHJcbiAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxufVxyXG4ucXVlc3QtYW5zd2VyX190ZXh0LWJsb2NrIHtcclxuICB3aWR0aDogODAlO1xyXG4gIGhlaWdodDogODAlO1xyXG4gIGJhY2tncm91bmQtaW1hZ2U6IHVybCgnLi4vLi4vYXNzZXRzL2ltZy90ZXh0LnBuZycpO1xyXG4gIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjtcclxuICBiYWNrZ3JvdW5kLXJlcGVhdDogbm8tcmVwZWF0O1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICB0b3A6IDIwcHg7XHJcbiAgbGVmdDogMTAlO1xyXG59XHJcbi50ZXh0LWJsb2NrX190ZXh0IHtcclxuICB3aWR0aDogNzAlO1xyXG4gIGhlaWdodDogMTUlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiA2OHB4O1xyXG4gIGxlZnQ6IDEzJTtcclxuICBjb2xvcjogI2ZmZmZmZjtcclxuICBmb250LXNpemU6IDE2cHg7XHJcbiAgZm9udC1mYW1pbHk6IENhdmVhdDtcclxufVxyXG4ucXVlc3Rpb24ge1xyXG4gIHdpZHRoOiA5MCU7XHJcbiAgaGVpZ2h0OiA4MCU7XHJcbiAgYmFja2dyb3VuZC1pbWFnZTogdXJsKCcuLi8uLi9hc3NldHMvaW1nL3F1ZXN0aW9uLnBuZycpO1xyXG4gIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjtcclxuICBiYWNrZ3JvdW5kLXJlcGVhdDogbm8tcmVwZWF0O1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICB0b3A6IDM1JTtcclxuICBsZWZ0OiA2JTtcclxufVxyXG4ucXVlc3Rpb25fX3RleHQge1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICB0b3A6IDUwcHg7XHJcbiAgd2lkdGg6IDgwJTtcclxuICBsZWZ0OiAxMCU7XHJcbiAgY29sb3I6ICNmZmZmZmY7XHJcbiAgZm9udC1zaXplOiAxOHB4O1xyXG4gIGZvbnQtZmFtaWx5OiBDYXZlYXQ7XHJcbn1cclxuLmFuc3dlcnMge1xyXG4gIGNvbG9yOiAjZmZmZmZmO1xyXG4gIGZvbnQtc2l6ZTogMTRweDtcclxuICB3aWR0aDogODAlO1xyXG4gIGxlZnQ6IDEwJTtcclxuICBmb250LWZhbWlseTogQ2F2ZWF0O1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBib3R0b206IDYwcHg7XHJcbn1cclxuLmFuc3dlcl9fYXJ0aWNsZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2Q2NzU3NTtcclxuICBwYWRkaW5nOiA4cHggNXB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgbWFyZ2luLXRvcDogMTVweDtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgLypib3gtc2hhZG93OiAwcHggMHB4IDEwcHggMnB4IHJnYmEoMCwwLDAsMC43KTsqL1xyXG59XHJcbi5hbnN3ZXJfX2FydGljbGU6Zmlyc3QtY2hpbGQge1xyXG4gIG1hcmdpbi10b3A6IDMwcHg7XHJcbn1cclxuLmFuc3dlcl9fdGV4dF9faGlkZGVuLWJsb2NrIHtcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIHdpZHRoOiAxMDB2dztcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbn1cclxuLnR5cGVkLWN1cnNvciB7XHJcbiAgb3BhY2l0eTogMDtcclxufVxyXG4iXX0= */";
     /***/
   },
 
@@ -870,17 +891,86 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _angular_animations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @angular/animations */
     "./node_modules/@angular/animations/fesm2015/animations.js");
+    /* harmony import */
+
+
+    var typed_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! typed.js */
+    "./node_modules/typed.js/lib/typed.js");
+    /* harmony import */
+
+
+    var typed_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(typed_js__WEBPACK_IMPORTED_MODULE_4__);
 
     var QuestionComponent = /*#__PURE__*/function () {
       function QuestionComponent(questionsService) {
         _classCallCheck(this, QuestionComponent);
 
         this.questionsService = questionsService;
+        this.currentBg = '../../assets/img/home.png';
       }
 
       _createClass(QuestionComponent, [{
         key: "ngOnInit",
-        value: function ngOnInit() {}
+        value: function ngOnInit() {
+          var _this = this;
+
+          if (this.questionsService.currentStep.text) {
+            setTimeout(function () {
+              var typed = new typed_js__WEBPACK_IMPORTED_MODULE_4___default.a('.text-block__text', {
+                strings: [_this.questionsService.currentStep.text],
+                typeSpeed: 30,
+                showCursor: false
+              });
+            }, 600);
+          } else if (this.questionsService.currentStep.question) {
+            setTimeout(function () {
+              var typed = new typed_js__WEBPACK_IMPORTED_MODULE_4___default.a('.question__text', {
+                strings: [_this.questionsService.currentStep.question],
+                typeSpeed: 30,
+                showCursor: false
+              });
+            }, 600);
+          }
+        }
+      }, {
+        key: "nextStep",
+        value: function nextStep(answer) {
+          var _this2 = this;
+
+          if (!this.questionsService.currentStep['next' + answer].text && !this.questionsService.currentStep['next' + answer].question && !this.questionsService.currentStep['next' + answer].bg && this.questionsService.currentStep['next' + answer].includes('scene')) {
+            this.questionsService.currentStep = this.questionsService[this.questionsService.currentStep['next' + answer]];
+          } else {
+            this.questionsService.currentStep = this.questionsService.currentStep['next' + answer];
+          }
+
+          if (this.questionsService.currentStep.text) {
+            setTimeout(function () {
+              var typed = new typed_js__WEBPACK_IMPORTED_MODULE_4___default.a('.text-block__text', {
+                strings: [_this2.questionsService.currentStep.text],
+                typeSpeed: 30,
+                showCursor: false
+              });
+            }, 600);
+          } else if (this.questionsService.currentStep.question) {
+            setTimeout(function () {
+              var typed = new typed_js__WEBPACK_IMPORTED_MODULE_4___default.a('.question__text', {
+                strings: [_this2.questionsService.currentStep.question],
+                typeSpeed: 30,
+                showCursor: false
+              });
+            }, 600);
+          }
+
+          if (this.questionsService.currentStep.bg) {
+            this.currentBg = this.questionsService.currentStep.bg;
+          }
+
+          this.questionsService.answersHidden = true;
+          setTimeout(function () {
+            _this2.questionsService.answersHidden = false;
+          }, 500);
+        }
       }]);
 
       return QuestionComponent;
@@ -899,11 +989,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       "./node_modules/raw-loader/dist/cjs.js!./src/app/question/question.component.html"))["default"],
       animations: [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["trigger"])('inOutAnimation', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["transition"])(':enter', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["style"])({
         opacity: 0
-      }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["animate"])('0.5s ease-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["style"])({
+      }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["animate"])('0.3s ease-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["style"])({
         opacity: 1
       }))]), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["transition"])(':leave', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["style"])({
         opacity: 1
-      }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["animate"])('0s ease-in', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["style"])({
+      }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["animate"])('0.1s ease-in', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_3__["style"])({
         opacity: 0
       }))])])],
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
@@ -945,70 +1035,502 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /*! @angular/core */
     "./node_modules/@angular/core/fesm2015/core.js");
 
-    var QuestionsService = /*#__PURE__*/function () {
-      function QuestionsService() {
-        _classCallCheck(this, QuestionsService);
+    var QuestionsService = function QuestionsService() {
+      _classCallCheck(this, QuestionsService);
 
-        this.sceneOne = {
-          question: 'First question',
-          answer1: 'First answer',
-          answer2: 'Second answer',
-          answer3: 'Third answer',
+      this.sceneMorning = {
+        text: '- Ох, очередной рабочий день.',
+        answer1: 'Полежать ещё немного',
+        answer2: 'Встать',
+        next1: {
+          text: '*Спустя час*',
           next1: {
-            text: 'Second question',
-            answer1: 'First answer',
-            answer2: 'Second answer',
-            answer3: 'Third answer'
+            text: '*БЛ*ТЬ, опять опаздываю!!!!*',
+            next1: 'sceneMetroLate'
+          }
+        },
+        next2: {
+          text: '- Ого, сегодня даже вовремя!',
+          next1: 'sceneMetroTime'
+        }
+      };
+      this.sceneMetroLate = {
+        bg: '../../assets/img/metro.png',
+        text: '- Больше никогда не буду опаздывать!!!',
+        answer1: 'Посидеть в баду',
+        answer2: 'Послушать музыку',
+        next1: {
+          text: '*Оглядываюсь, чтобы убедиться, что никто не смотрит*',
+          next1: 'sceneBadooMetroLate'
+        },
+        next2: {
+          bg: '../../assets/img/metro-bad.png',
+          text: '*Внутренний голос вновь начинает лекцию...*',
+          next1: {
+            text: '- Так бездарно тратить жизнь - это целый талант...',
+            next1: {
+              text: '- Ну хоть один талант имеется...',
+              next1: {
+                text: '*Диктор прерывает внутренний спич*',
+                next1: {
+                  bg: '../../assets/img/metro.png',
+                  text: '"Станция метро Тургеневская!"',
+                  next1: 'sceneWorkLate'
+                }
+              }
+            }
+          }
+        }
+      };
+      this.sceneMetroTime = {
+        bg: '../../assets/img/metro.png',
+        text: '- День обещает быть хотя бы не ужасным.',
+        answer1: 'Посидеть в баду',
+        answer2: 'Послушать музыку',
+        next1: {
+          text: '*Оглядываюсь, чтобы убедиться, что никто не смотрит*',
+          next1: 'sceneBadooMetroTime'
+        },
+        next2: {
+          bg: '../../assets/img/metro-bad.png',
+          text: '*Внутренний голос вновь начинает лекцию...*',
+          next1: {
+            text: '*Город засыпает, просыпаются тараканы*',
+            next1: {
+              text: '*Диктор прерывает внутренний спич*',
+              next1: {
+                bg: '../../assets/img/metro.png',
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTime'
+              }
+            }
+          }
+        }
+      };
+      this.sceneWorkLate = {
+        bg: '../../assets/img/office.png',
+        text: '- Надеюсь никто не заметил, что я опять опоздал.',
+        next1: {
+          bg: '../../assets/img/office-friend.png',
+          question: '- Олег, опять опоздал?',
+          answer1: 'Это всё не я, честно',
+          answer2: 'Кто такое сказал?',
+          answer23: 'Дэээээээ',
+          next1: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду побыстрее к своему месту*',
+            next1: 'sceneWork'
           },
           next2: {
-            question: 'Second question',
-            answer1: 'First answer',
-            answer2: 'Second answer',
-            answer3: 'Third answer'
+            bg: '../../assets/img/office.png',
+            text: '*Иду побыстрее к своему месту*',
+            next1: 'sceneWork'
           },
           next3: {
-            question: 'Second question',
-            answer1: 'First answer',
-            answer2: 'Second answer',
-            answer3: 'Third answer'
+            bg: '../../assets/img/office.png',
+            text: '*Иду побыстрее к своему месту*',
+            next1: 'sceneWork'
           }
-        };
-        this.answersHidden = false;
-        this.currentStep = this.sceneOne;
-        this.currentText = this.currentStep.question;
-        this.currentAnswers = [this.currentStep.answer1, this.currentStep.answer2, this.currentStep.answer3];
-      }
-
-      _createClass(QuestionsService, [{
-        key: "nextStep",
-        value: function nextStep(answer) {
-          var _this = this;
-
-          this.answersHidden = true;
-          this.currentStep = this.currentStep['next' + answer];
-          this.currentText = this.currentStep.question;
-          this.currentAnswers = [];
-
-          if (this.currentStep.answer1) {
-            this.currentAnswers.push(this.currentStep.answer1);
-          }
-
-          if (this.currentStep.answer2) {
-            this.currentAnswers.push(this.currentStep.answer2);
-          }
-
-          if (this.currentStep.answer3) {
-            this.currentAnswers.push(this.currentStep.answer3);
-          }
-
-          setTimeout(function () {
-            _this.answersHidden = false;
-          }, 500);
         }
-      }]);
-
-      return QuestionsService;
-    }();
+      };
+      this.sceneWorkTime = {
+        bg: '../../assets/img/office.png',
+        text: '- А я не опоздал!!!',
+        next1: {
+          bg: '../../assets/img/office-friend.png',
+          question: '- Олег, моё уважение, сегодня пришёл даже раньше.',
+          answer1: 'А кто-то во мне сомневался?',
+          answer2: 'Я молодец, я знаю, спасибо)',
+          answer23: 'Дэээээээ',
+          next1: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду вольяжно к своему месту*',
+            next1: 'sceneWork'
+          },
+          next2: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду вольяжно к своему месту*',
+            next1: 'sceneWork'
+          },
+          next3: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду вольяжно к своему месту*',
+            next1: 'sceneWork'
+          }
+        }
+      };
+      this.sceneWorkLateBadoo = {
+        bg: '../../assets/img/office.png',
+        text: '- Надеюсь никто не заметил, что я опять опоздал.',
+        next1: {
+          bg: '../../assets/img/office-friend.png',
+          question: '- Олег, опять опоздал?',
+          answer1: 'Это всё не я, честно',
+          answer2: 'Кто такое сказал?',
+          answer23: 'Дэээээээ',
+          next1: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду побыстрее к своему месту*',
+            next1: 'sceneWorkBadoo'
+          },
+          next2: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду побыстрее к своему месту*',
+            next1: 'sceneWorkBadoo'
+          },
+          next3: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду побыстрее к своему месту*',
+            next1: 'sceneWorkBadoo'
+          }
+        }
+      };
+      this.sceneWorkTimeBadoo = {
+        bg: '../../assets/img/office.png',
+        text: '- А я не опоздал!!!',
+        next1: {
+          bg: '../../assets/img/office-friend.png',
+          question: '- Олег, моё уважение, сегодня пришёл даже раньше.',
+          answer1: 'А кто-то во мне сомневался?',
+          answer2: 'Я молодец, я знаю, спасибо)',
+          answer23: 'Дэээээээ',
+          next1: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду вольяжно к своему месту*',
+            next1: 'sceneWorkBadoo'
+          },
+          next2: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду вольяжно к своему месту*',
+            next1: 'sceneWorkBadoo'
+          },
+          next3: {
+            bg: '../../assets/img/office.png',
+            text: '*Иду вольяжно к своему месту*',
+            next1: 'sceneWorkBadoo'
+          }
+        }
+      };
+      this.sceneWork = {
+        text: '*Пилик-пилик*',
+        next1: {
+          text: '*Пилик-пилик*',
+          next1: {
+            text: '*Пилик-пилик*',
+            next1: {
+              text: '*Пилик-пилик*',
+              next1: 'sceneWorkComingHome'
+            }
+          }
+        }
+      };
+      this.sceneWorkComingHome = {
+        bg: '../../assets/img/metro.png',
+        text: '*Ненавижу метро...*',
+        next1: 'sceneHome'
+      };
+      this.sceneWorkBadoo = {
+        text: '*Пилик-пилик*',
+        next1: {
+          text: '*Пилик-пилик*',
+          next1: {
+            text: '*Пилик-пилик*',
+            next1: {
+              text: '*Пилик-пилик*',
+              next1: 'sceneMetroMeetBadoo'
+            }
+          }
+        }
+      };
+      this.sceneHome = {
+        bg: '../../assets/img/home-mom.png',
+        question: '- Ой, сыночек уже вернулся. Что будешь на ужин?',
+        answer1: 'Макароны',
+        answer2: 'Я уже покушал, спасибо',
+        answer3: 'Чай с печеньями',
+        next1: {
+          bg: '../../assets/img/home.png',
+          text: '*Иду в комнату*',
+          next1: {
+            bg: '../../assets/img/end-bad.png'
+          }
+        },
+        next2: {
+          bg: '../../assets/img/home.png',
+          text: '*Иду в комнату*',
+          next1: {
+            bg: '../../assets/img/end-bad.png'
+          }
+        },
+        next3: {
+          bg: '../../assets/img/home.png',
+          text: '*Иду в комнату*',
+          next1: {
+            bg: '../../assets/img/end-bad.png'
+          }
+        }
+      };
+      this.sceneBadooMetroLate = {
+        bg: '../../assets/img/metro-badoo-1.png',
+        question: 'Настя, 17 лет, увелкается литературой',
+        answer1: 'Поставить лайк',
+        answer2: 'Поставить дизлайк',
+        next1: {
+          bg: '../../assets/img/metro-badoo-2.png',
+          question: 'Настя, 19 лет, технарь. Считает, что математика везде',
+          answer1: 'Поставить лайк',
+          answer2: 'Поставить дизлайк',
+          next1: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            }
+          },
+          next2: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            }
+          }
+        },
+        next2: {
+          bg: '../../assets/img/metro-badoo-2.png',
+          question: 'Настя, 19 лет, технарь. Считает, что математика везде',
+          answer1: 'Поставить лайк',
+          answer2: 'Поставить дизлайк',
+          next1: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            }
+          },
+          next2: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkLateBadoo'
+              }
+            }
+          }
+        }
+      };
+      this.sceneBadooMetroTime = {
+        bg: '../../assets/img/metro-badoo-1.png',
+        question: 'Настя, 17 лет, увелкается литературой',
+        answer1: 'Поставить лайк',
+        answer2: 'Поставить дизлайк',
+        next1: {
+          bg: '../../assets/img/metro-badoo-2.png',
+          question: 'Настя, 19 лет, технарь. Считает, что математика везде',
+          answer1: 'Поставить лайк',
+          answer2: 'Поставить дизлайк',
+          next1: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            }
+          },
+          next2: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            }
+          }
+        },
+        next2: {
+          bg: '../../assets/img/metro-badoo-2.png',
+          question: 'Настя, 19 лет, технарь. Считает, что математика везде',
+          answer1: 'Поставить лайк',
+          answer2: 'Поставить дизлайк',
+          next1: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            }
+          },
+          next2: {
+            bg: '../../assets/img/metro-badoo-3.png',
+            question: 'Настя, 16 лет, любит тусоваться на кг',
+            answer1: 'Поставить лайк',
+            answer2: 'Поставить дизлайк',
+            next1: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            },
+            next2: {
+              bg: '../../assets/img/metro.png',
+              text: '*Диктор прерывает увлекательное занятие*',
+              next1: {
+                text: '"Станция метро Тургеневская!"',
+                next1: 'sceneWorkTimeBadoo'
+              }
+            }
+          }
+        }
+      };
+      this.sceneMetroMeetBadoo = {
+        bg: '../../assets/img/metro.png',
+        text: '- Ох уж это метро, ненавижу его...',
+        next1: {
+          bg: '../../assets/img/metro-nasty.png',
+          text: '- Стоп... Я её же видел с утра в баду',
+          answer1: 'Подойти',
+          answer2: 'Дальше слушать музыку',
+          next1: {
+            question: 'Привет)',
+            answer1: 'Привет)',
+            answer2: 'Кукусики)',
+            next1: {
+              question: 'Не против, если я нарисую тебя?',
+              answer1: 'Нет конечно',
+              answer2: 'Как можно отказать такой прекрасной даме)'
+            },
+            next2: {
+              question: 'Что-то случилось?',
+              answer1: 'Хотел сказать, что ты очень милая',
+              answer2: 'У тебя случайно нет парня?'
+            }
+          },
+          next2: {
+            text: '*Мило улыбается*',
+            answer1: 'Подойти',
+            answer2: 'Дальше слушать музыку',
+            next1: {
+              question: 'Привет)',
+              answer1: 'Привет)',
+              answer2: 'Кукусики)',
+              next1: {
+                question: 'Не против, если я нарисую тебя?',
+                answer1: 'Нет конечно',
+                answer2: 'Как можно отказать такой прекрасной даме)'
+              },
+              next2: {
+                question: 'Что-то случилось?',
+                answer1: 'Хотел сказать, что ты очень милая',
+                answer2: 'У тебя случайно нет парня?'
+              }
+            },
+            next2: 'sceneHome'
+          }
+        }
+      };
+      this.currentStep = this.sceneMorning;
+      this.answersHidden = false;
+    };
 
     QuestionsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
